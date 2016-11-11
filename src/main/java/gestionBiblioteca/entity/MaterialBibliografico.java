@@ -11,6 +11,10 @@ public class MaterialBibliografico {
 	public MaterialBibliografico() {
 	}
 
+	public MaterialBibliografico(String codigo) {
+		this.codigo = codigo;
+	}
+
 	public MaterialBibliografico(String codigo, String titulo, int anioPublicacion, int unidades, int tipo) {
 		this.codigo = codigo;
 		this.titulo = titulo;

@@ -4,11 +4,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 import gestionBiblioteca.entity.GestionBiblioteca;
+import gestionBiblioteca.entity.MaterialBibliografico;
+import gestionBiblioteca.entity.Persona;
 import gestionBiblioteca.utils.UtilsArchivos;
 
 public class GestionBibliotecaDaoImpl implements GestionBibliotecaDao {
 
 	private String bdGestionBiblioteca = UtilsArchivos.getBDGestionBiblioteca();
+	private PersonaDao personaDao = new PersonaDaoImpl();
+	private MaterialBibliograficoDao materialBibliograficoDao = new MaterialBibliograficoDaoImpl();
 
 	public String insertar(GestionBiblioteca gestionBiblioteca) {
 		try {
@@ -22,8 +26,14 @@ public class GestionBibliotecaDaoImpl implements GestionBibliotecaDao {
 	public List<GestionBiblioteca> obtenerTodos() {
 		List<GestionBiblioteca> listaGestionBiblioteca = new ArrayList<GestionBiblioteca>();
 		try {
-			for (String dato : UtilsArchivos.obtenerTodos(bdGestionBiblioteca))
-				listaGestionBiblioteca.add(new GestionBiblioteca(dato.split(",")));
+			for (String dato : UtilsArchivos.obtenerTodos(bdGestionBiblioteca)) {
+				String datoAux[] = dato.split(",");
+				Persona persona = personaDao.obtenerPorCedula(datoAux[4]);
+				List<MaterialBibliografico> listaMaterialBibliografico = new ArrayList<MaterialBibliografico>();
+				for (int i = 5; i < datoAux.length; i++)
+					listaMaterialBibliografico.add(materialBibliograficoDao.obtenerPorCodigo(datoAux[i]));
+				listaGestionBiblioteca.add(new GestionBiblioteca(datoAux, persona, listaMaterialBibliografico));
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
@@ -31,9 +41,9 @@ public class GestionBibliotecaDaoImpl implements GestionBibliotecaDao {
 		return listaGestionBiblioteca;
 	}
 
-	public GestionBiblioteca obtenerPorCedula(String cedula) {
+	public GestionBiblioteca obtenerPorId(int id) {
 		for (GestionBiblioteca gestionBiblioteca : obtenerTodos())
-			if (gestionBiblioteca.getCedula().compareToIgnoreCase(cedula) == 0)
+			if (gestionBiblioteca.getId() == id)
 				return gestionBiblioteca;
 		return null;
 	}

@@ -22,7 +22,7 @@ public class MaterialBibliograficoDaoImpl implements MaterialBibliograficoDao {
 			else
 				UtilsArchivos.insertar(bdMaterialBibliografico, ((Libro) materialBibliografico).toString());
 		} catch (Exception e) {
-			return "TNo se pudo ingresar el material bibliografico, causa: " + e.getCause().getMessage();
+			return "FNo se pudo ingresar el material bibliografico, causa: " + e.getCause().getMessage();
 		}
 		return "TSe ingreso correctamente el material bibliografico";
 	}
@@ -47,7 +47,7 @@ public class MaterialBibliograficoDaoImpl implements MaterialBibliograficoDao {
 		return listaMaterialBibliografico;
 	}
 
-	public MaterialBibliografico obtenerPorCedula(String codigo) {
+	public MaterialBibliografico obtenerPorCodigo(String codigo) {
 		for (MaterialBibliografico materialBibliografico : obtenerTodos())
 			if (materialBibliografico.getCodigo().compareToIgnoreCase(codigo) == 0)
 				return materialBibliografico;
@@ -62,7 +62,7 @@ public class MaterialBibliograficoDaoImpl implements MaterialBibliograficoDao {
 			UtilsArchivos.modificarEliminar(bdMaterialBibliografico,
 					UtilsArchivos.generarListaGuardar(listaMaterialBibliografico));
 		} catch (Exception e) {
-			return "TNo se pudo modificar el material bibliografico, causa: " + e.getCause().getMessage();
+			return "FNo se pudo modificar el material bibliografico, causa: " + e.getCause().getMessage();
 		}
 		return "TSe modifico correctamente el material bibliografico";
 	}
@@ -74,7 +74,7 @@ public class MaterialBibliograficoDaoImpl implements MaterialBibliograficoDao {
 			UtilsArchivos.modificarEliminar(bdMaterialBibliografico,
 					UtilsArchivos.generarListaGuardar(listaMaterialBibliografico));
 		} catch (Exception e) {
-			return "TNo se pudo eliminar el material bibliografico: " + e.getCause().getMessage();
+			return "FNo se pudo eliminar el material bibliografico: " + e.getCause().getMessage();
 		}
 		return "TSe elimino correctamente el material bibliografico";
 	}

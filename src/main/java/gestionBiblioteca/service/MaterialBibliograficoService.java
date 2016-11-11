@@ -1,10 +1,10 @@
-package gestionBiblioteca.dao;
+package gestionBiblioteca.service;
 
 import java.util.List;
 
 import gestionBiblioteca.entity.MaterialBibliografico;
 
-public interface MaterialBibliograficoDao {
+public interface MaterialBibliograficoService {
 
 	public String insertar(MaterialBibliografico materialBibliografico);
 

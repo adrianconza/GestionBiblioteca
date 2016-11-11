@@ -19,7 +19,7 @@ public class PersonaDaoImpl implements PersonaDao {
 			else
 				UtilsArchivos.insertar(bdPersona, ((Docente) persona).toString());
 		} catch (Exception e) {
-			return "TNo se pudo ingresar a la persona, causa: " + e.getCause().getMessage();
+			return "FNo se pudo ingresar a la persona, causa: " + e.getCause().getMessage();
 		}
 		return "TSe ingreso correctamente a la persona";
 	}
@@ -55,7 +55,7 @@ public class PersonaDaoImpl implements PersonaDao {
 			listaPersona.set(listaPersona.indexOf(persona), persona);
 			UtilsArchivos.modificarEliminar(bdPersona, UtilsArchivos.generarListaGuardar(listaPersona));
 		} catch (Exception e) {
-			return "TNo se pudo modificar a la persona, causa: " + e.getCause().getMessage();
+			return "FNo se pudo modificar a la persona, causa: " + e.getCause().getMessage();
 		}
 		return "TSe modifico correctamente a la persona";
 	}
@@ -66,7 +66,7 @@ public class PersonaDaoImpl implements PersonaDao {
 			listaPersona.remove(persona);
 			UtilsArchivos.modificarEliminar(bdPersona, UtilsArchivos.generarListaGuardar(listaPersona));
 		} catch (Exception e) {
-			return "TNo se pudo eliminar a la persona, causa: " + e.getCause().getMessage();
+			return "FNo se pudo eliminar a la persona, causa: " + e.getCause().getMessage();
 		}
 		return "TSe elimino correctamente a la persona";
 	}

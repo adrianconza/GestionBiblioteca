@@ -1,10 +1,10 @@
-package gestionBiblioteca.dao;
+package gestionBiblioteca.service;
 
 import java.util.List;
 
 import gestionBiblioteca.entity.GestionBiblioteca;
 
-public interface GestionBibliotecaDao {
+public interface GestionBibliotecaService {
 
 	public String insertar(GestionBiblioteca gestionBiblioteca);
 
