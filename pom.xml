@@ -19,7 +19,7 @@
 						<manifest>
 							<addClasspath>true</addClasspath>
 							<classpathPrefix>lib/</classpathPrefix>
-							<mainClass>gestionBiblioteca.gui.Principal</mainClass>
+							<mainClass>gestionBiblioteca.gui.JIFPrincipal</mainClass>
 						</manifest>
 					</archive>
 				</configuration>
