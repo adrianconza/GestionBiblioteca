@@ -1,0 +1,11 @@
+*.settings
+/target
+*.classpath
+*.project
+/bin/
+*.pdf
+*.jrprint
+*.xls
+/tmp
+
+src/main/resources/PropiedadesPrincipales.properties
