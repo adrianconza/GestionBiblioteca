@@ -78,6 +78,8 @@ public class PersonaServiceImpl implements PersonaService {
 			return "FEscoja una persona para insertar";
 		else if (persona.getCedula() == null || persona.getCedula().compareToIgnoreCase("") == 0)
 			return "FIngrese la cedula de la persona";
+		else if (!isDigit(persona.getCedula()))
+			return "FLa cedula solo puede ser digitos";
 		else if (persona.getNombre() == null || persona.getNombre().compareToIgnoreCase("") == 0)
 			return "FIngrese el nombre de la persona";
 		else if (persona.getApellido() == null || persona.getApellido().compareToIgnoreCase("") == 0)

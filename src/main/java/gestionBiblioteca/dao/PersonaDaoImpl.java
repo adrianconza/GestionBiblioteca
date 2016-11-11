@@ -37,7 +37,7 @@ public class PersonaDaoImpl implements PersonaDao {
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
-			return null;
+			return new ArrayList<Persona>();
 		}
 		return listaPersona;
 	}
@@ -52,10 +52,15 @@ public class PersonaDaoImpl implements PersonaDao {
 	public String modificar(Persona persona) {
 		try {
 			List<Persona> listaPersona = obtenerTodos();
-			listaPersona.set(listaPersona.indexOf(persona), persona);
+			for (int i = 0; i < listaPersona.size(); i++)
+				if (persona.getCedula().compareToIgnoreCase(listaPersona.get(i).getCedula()) == 0) {
+					listaPersona.set(i, persona);
+					break;
+				}
 			UtilsArchivos.modificarEliminar(bdPersona, UtilsArchivos.generarListaGuardar(listaPersona));
 		} catch (Exception e) {
-			return "FNo se pudo modificar a la persona, causa: " + e.getCause().getMessage();
+			e.printStackTrace();
+			return "FNo se pudo modificar a la persona, causa: " + e.getCause();
 		}
 		return "TSe modifico correctamente a la persona";
 	}
@@ -63,7 +68,12 @@ public class PersonaDaoImpl implements PersonaDao {
 	public String eliminar(Persona persona) {
 		try {
 			List<Persona> listaPersona = obtenerTodos();
-			listaPersona.remove(persona);
+			for (int i = 0; i < listaPersona.size(); i++)
+				if (persona.getCedula().compareToIgnoreCase(listaPersona.get(i).getCedula()) == 0) {
+					listaPersona.remove(i);
+					break;
+				}
+			listaPersona.remove(obtenerPorCedula(persona.getCedula()));
 			UtilsArchivos.modificarEliminar(bdPersona, UtilsArchivos.generarListaGuardar(listaPersona));
 		} catch (Exception e) {
 			return "FNo se pudo eliminar a la persona, causa: " + e.getCause().getMessage();

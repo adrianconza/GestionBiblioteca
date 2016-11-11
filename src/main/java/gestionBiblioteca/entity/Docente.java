@@ -34,7 +34,7 @@ public class Docente extends Persona {
 
 	@Override
 	public String toString() {
-		return super.toString() + ", " + materia;
+		return super.toString() + "," + materia;
 	}
 
 }

@@ -75,9 +75,9 @@ public class GestionBiblioteca {
 	public String toString() {
 		String materialBibliografico = "";
 		for (MaterialBibliografico mb : listaMaterialBibliografico)
-			materialBibliografico += mb.getCodigo() + ", ";
-		return id + ", " + UtilsDate.dateToString(fechaPrestamo) + ", " + UtilsDate.dateToString(fechaDevolucion) + ", "
-				+ persona.getCedula() + ", " + materialBibliografico.substring(0, materialBibliografico.length() - 2);
+			materialBibliografico += mb.getCodigo() + ",";
+		return id + "," + UtilsDate.dateToString(fechaPrestamo) + "," + UtilsDate.dateToString(fechaDevolucion) + ","
+				+ persona.getCedula() + "," + materialBibliografico.substring(0, materialBibliografico.length() - 1);
 	}
 
 }

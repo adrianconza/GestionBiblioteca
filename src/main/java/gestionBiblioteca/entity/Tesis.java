@@ -43,7 +43,7 @@ public class Tesis extends MaterialBibliografico {
 
 	@Override
 	public String toString() {
-		return super.toString() + ", " + autor + ", " + tutor;
+		return super.toString() + "," + autor + "," + tutor;
 	}
 
 }

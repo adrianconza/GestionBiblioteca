@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.RandomAccessFile;
 import java.util.ArrayList;
@@ -22,21 +23,33 @@ public class UtilsArchivos {
 	}
 
 	public static String getBDPersona() {
-		return getBD() + "BDPersona.txt";
+		return crearFile(getBD() + "BDPersona.txt");
 	}
 
 	public static String getBDMaterialBibliografico() {
-		return getBD() + "BDMaterialBibliografico.txt";
+		return crearFile(getBD() + "BDMaterialBibliografico.txt");
 	}
 
 	public static String getBDGestionBiblioteca() {
-		return getBD() + "BDGestionBiblioteca.txt";
+		return crearFile(getBD() + "BDGestionBiblioteca.txt");
 	}
 
 	public static String crearRuta(String ruta) {
 		File directorio = new File(ruta);
 		if (!directorio.exists())
 			directorio.mkdirs();
+		return ruta;
+	}
+
+	public static String crearFile(String ruta) {
+		try {
+			File directorio = new File(ruta);
+			if (!directorio.exists())
+				directorio.createNewFile();
+		} catch (IOException e) {
+			e.printStackTrace();
+			return null;
+		}
 		return ruta;
 	}
 
@@ -54,11 +67,12 @@ public class UtilsArchivos {
 		List<String> list = new ArrayList<String>();
 		BufferedReader br = null;
 		try {
-			br = new BufferedReader(new FileReader(archivo));
+			br = new BufferedReader(new FileReader(new File(archivo)));
 			String linea;
 			while ((linea = br.readLine()) != null)
 				list.add(linea);
 		} catch (Exception e) {
+			e.printStackTrace();
 			throw new Exception("Error al leer el fichero");
 		} finally {
 			try {

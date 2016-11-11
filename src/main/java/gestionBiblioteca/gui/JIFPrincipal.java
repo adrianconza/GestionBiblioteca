@@ -32,7 +32,7 @@ public class JIFPrincipal extends JFrame {
 
 	private void initialize() {
 		setTitle("Gestion de Biblioteca");
-		setBounds(100, 100, 850, 700);
+		setBounds(100, 100, 1000, 700);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		desktop = new JDesktopPane();

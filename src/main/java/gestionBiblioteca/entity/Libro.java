@@ -53,7 +53,7 @@ public class Libro extends MaterialBibliografico {
 
 	@Override
 	public String toString() {
-		return super.toString() + ", " + editorial + ", " + autor + ", " + edicion;
+		return super.toString() + "," + editorial + "," + autor + "," + edicion;
 	}
 
 }

@@ -47,7 +47,7 @@ public class Revista extends MaterialBibliografico {
 
 	@Override
 	public String toString() {
-		return super.toString() + ", " + UtilsDate.dateToString(fechaPublicacion) + ", " + tipoRevista;
+		return super.toString() + "," + UtilsDate.dateToString(fechaPublicacion) + "," + tipoRevista;
 	}
 
 }

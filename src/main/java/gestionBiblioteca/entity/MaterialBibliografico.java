@@ -65,7 +65,7 @@ public class MaterialBibliografico {
 
 	@Override
 	public String toString() {
-		return tipo + ", " + codigo + ", " + titulo + ", " + anioPublicacion + ", " + unidades;
+		return tipo + "," + codigo + "," + titulo + "," + anioPublicacion + "," + unidades;
 	}
 
 }
