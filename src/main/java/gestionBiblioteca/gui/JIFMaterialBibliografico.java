@@ -57,17 +57,17 @@ public class JIFMaterialBibliografico extends JInternalFrame {
 	private MaterialBibliografico materialBibliografico = new MaterialBibliografico();
 	private boolean nuevoModificar;
 
-	public JIFMaterialBibliografico() {
+	public JIFMaterialBibliografico(int posicionX, int posicionY) {
 		super("Gestionar Material Bibliografico", true, true, true, true);
-		initComponents();
+		initComponents(posicionX, posicionY);
 		limpiar();
 		activarDesactivar(false);
 		listMaterialBibliografico = materialBibliograficoService.obtenerTodos();
 		llenarTabla();
 	}
 
-	private void initComponents() {
-		setBounds(40, 25, 837, 476);
+	private void initComponents(int posicionX, int posicionY) {
+		setBounds(posicionX, posicionY, 837, 476);
 		getContentPane().setLayout(null);
 
 		JPanel panel = new JPanel();

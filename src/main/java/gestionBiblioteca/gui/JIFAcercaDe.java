@@ -12,9 +12,9 @@ import gestionBiblioteca.utils.UtilsArchivos;
 public class JIFAcercaDe extends JInternalFrame {
 	private static final long serialVersionUID = 1L;
 
-	public JIFAcercaDe() {
+	public JIFAcercaDe(int posicionX, int posicionY) {
 		super("Acerca De", false, true, false, true);
-		setBounds(40, 25, 726, 287);
+		setBounds(posicionX, posicionY, 726, 287);
 		getContentPane().setLayout(null);
 
 		String font = "SansSerif";
@@ -93,6 +93,7 @@ public class JIFAcercaDe extends JInternalFrame {
 		getContentPane().add(lblBD);
 
 		setVisible(true);
+
 	}
 
 }

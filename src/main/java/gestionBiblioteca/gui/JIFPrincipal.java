@@ -3,6 +3,7 @@ package gestionBiblioteca.gui;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.beans.PropertyVetoException;
 
 import javax.swing.JDesktopPane;
 import javax.swing.JFrame;
@@ -15,6 +16,8 @@ public class JIFPrincipal extends JFrame {
 	private static final long serialVersionUID = 1L;
 
 	private JDesktopPane desktop;
+	private int x = 25;
+	private int y = 25;
 
 	public static void main(String[] args) {
 		try {
@@ -49,8 +52,16 @@ public class JIFPrincipal extends JFrame {
 		JMenuItem mntmGestionar = new JMenuItem("Gestionar");
 		mntmGestionar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				JIFGestionBiblioteca jifGestionBiblioteca = new JIFGestionBiblioteca();
+				JIFGestionBiblioteca jifGestionBiblioteca = new JIFGestionBiblioteca(x, y);
+				jifGestionBiblioteca.moveToFront();
 				desktop.add(jifGestionBiblioteca);
+				posicionVentanas();
+				jifGestionBiblioteca.moveToFront();
+				try {
+					jifGestionBiblioteca.setSelected(true);
+				} catch (PropertyVetoException ex) {
+					ex.printStackTrace();
+				}
 			}
 		});
 		mnBiblioteca.add(mntmGestionar);
@@ -58,8 +69,16 @@ public class JIFPrincipal extends JFrame {
 		JMenuItem mntmMaterialBibliografico = new JMenuItem("Material Bibliografico");
 		mntmMaterialBibliografico.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				JIFMaterialBibliografico jifMaterialBibliografico = new JIFMaterialBibliografico();
+				JIFMaterialBibliografico jifMaterialBibliografico = new JIFMaterialBibliografico(x, y);
+				jifMaterialBibliografico.moveToFront();
 				desktop.add(jifMaterialBibliografico);
+				posicionVentanas();
+				jifMaterialBibliografico.moveToFront();
+				try {
+					jifMaterialBibliografico.setSelected(true);
+				} catch (PropertyVetoException ex) {
+					ex.printStackTrace();
+				}
 			}
 		});
 		mnBiblioteca.add(mntmMaterialBibliografico);
@@ -67,8 +86,16 @@ public class JIFPrincipal extends JFrame {
 		JMenuItem mntmPersona = new JMenuItem("Persona");
 		mntmPersona.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				JIFPersona jifPersona = new JIFPersona();
+				JIFPersona jifPersona = new JIFPersona(x, y);
+				jifPersona.moveToFront();
 				desktop.add(jifPersona);
+				posicionVentanas();
+				jifPersona.moveToFront();
+				try {
+					jifPersona.setSelected(true);
+				} catch (PropertyVetoException ex) {
+					ex.printStackTrace();
+				}
 			}
 		});
 		mnBiblioteca.add(mntmPersona);
@@ -79,10 +106,26 @@ public class JIFPrincipal extends JFrame {
 		JMenuItem mntmAcercaDe = new JMenuItem("Acerca de");
 		mntmAcercaDe.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				JIFAcercaDe jifAcercaDe = new JIFAcercaDe();
+				JIFAcercaDe jifAcercaDe = new JIFAcercaDe(x, y);
 				desktop.add(jifAcercaDe);
+				posicionVentanas();
+				jifAcercaDe.moveToFront();
+				try {
+					jifAcercaDe.setSelected(true);
+				} catch (PropertyVetoException ex) {
+					ex.printStackTrace();
+				}
 			}
 		});
 		mnAyuda.add(mntmAcercaDe);
+	}
+
+	public void posicionVentanas() {
+		x += 25;
+		y += 25;
+		if (x == 200)
+			x = 25;
+		if (y == 200)
+			y = 25;
 	}
 }

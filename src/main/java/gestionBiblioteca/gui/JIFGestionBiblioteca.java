@@ -59,17 +59,17 @@ public class JIFGestionBiblioteca extends JInternalFrame {
 	private GestionBiblioteca gestionBiblioteca = new GestionBiblioteca();
 	private boolean nuevoModificar;
 
-	public JIFGestionBiblioteca() {
+	public JIFGestionBiblioteca(int posicionX, int posicionY) {
 		super("Gestionar Biblioteca", true, true, true, true);
-		initComponents();
+		initComponents(posicionX, posicionY);
 		limpiar();
 		activarDesactivar(false);
 		listGestionBiblioteca = gestionBibliotecaService.obtenerTodos();
 		llenarTabla();
 	}
 
-	private void initComponents() {
-		setBounds(40, 25, 837, 476);
+	private void initComponents(int posicionX, int posicionY) {
+		setBounds(posicionX, posicionY, 837, 476);
 		getContentPane().setLayout(null);
 
 		JPanel panel = new JPanel();
@@ -331,6 +331,14 @@ public class JIFGestionBiblioteca extends JInternalFrame {
 		String fechaPrestamo = jtfFechaPrestamo.getText();
 		String fechaDevolucion = jtfFechaDevolucion.getText();
 		String persona = jtfPersona.getText();
+
+		if (fechaDevolucion != null && fechaDevolucion.compareToIgnoreCase("") != 0
+				&& UtilsDate.stringToDate(fechaDevolucion) == null) {
+			JOptionPane.showMessageDialog(null,
+					"Ingrese la fecha de devolucion de la gestion biblioteca en formato dd/MM/yyyy",
+					"Mensaje del Sistema", JOptionPane.ERROR_MESSAGE);
+			return;
+		}
 
 		int id = nuevoModificar ? listGestionBiblioteca.size() + 1 : gestionBiblioteca.getId();
 

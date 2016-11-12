@@ -56,17 +56,17 @@ public class JIFPersona extends JInternalFrame {
 	private Persona persona = new Persona();
 	private boolean nuevoModificar;
 
-	public JIFPersona() {
+	public JIFPersona(int posicionX, int posicionY) {
 		super("Gestionar Personas", true, true, true, true);
-		initComponents();
+		initComponents(posicionX, posicionY);
 		limpiar();
 		activarDesactivar(false);
 		listPersona = personaService.obtenerTodos();
 		llenarTabla();
 	}
 
-	private void initComponents() {
-		setBounds(40, 25, 837, 476);
+	private void initComponents(int posicionX, int posicionY) {
+		setBounds(posicionX, posicionY, 837, 476);
 		getContentPane().setLayout(null);
 
 		JPanel panel = new JPanel();
