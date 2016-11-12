@@ -53,7 +53,7 @@ public class GestionBibliotecaServiceImpl implements GestionBibliotecaService {
 		else if (gestionBiblioteca.getId() == 0)
 			return "FIngrese el id de la gestion biblioteca";
 		else if (gestionBiblioteca.getFechaPrestamo() == null)
-			return "FIngrese la fecha de prestamo de la gestion biblioteca";
+			return "FIngrese la fecha de prestamo de la gestion biblioteca en formato dd/MM/yyyy";
 		else if (gestionBiblioteca.getPersona() == null
 				|| gestionBiblioteca.getPersona().getCedula().compareToIgnoreCase("") == 0)
 			return "FIngrese la persona";

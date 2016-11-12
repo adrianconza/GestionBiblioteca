@@ -21,17 +21,17 @@ public class PersonaServiceImpl implements PersonaService {
 		else {
 			if (persona.getTipo() == 1) {
 				Estudiante estudiante = (Estudiante) persona;
-				estudiante.setCarrera(estudiante.getCarrera().toUpperCase());
+				estudiante.setCarrera(estudiante.getCarrera().toUpperCase().replace(",", ""));
 				persona = estudiante;
 			} else {
 				Docente docente = (Docente) persona;
-				docente.setMateria(docente.getMateria().toUpperCase());
+				docente.setMateria(docente.getMateria().toUpperCase().replace(",", ""));
 				persona = docente;
 			}
-			persona.setCedula(persona.getCedula().toUpperCase());
-			persona.setNombre(persona.getNombre().toUpperCase());
-			persona.setApellido(persona.getApellido().toUpperCase());
-			persona.setCiudad(persona.getCiudad().toUpperCase());
+			persona.setCedula(persona.getCedula().toUpperCase().replace(",", ""));
+			persona.setNombre(persona.getNombre().toUpperCase().replace(",", ""));
+			persona.setApellido(persona.getApellido().toUpperCase().replace(",", ""));
+			persona.setCiudad(persona.getCiudad().toUpperCase().replace(",", ""));
 			return personaDao.insertar(persona);
 		}
 	}
@@ -51,17 +51,17 @@ public class PersonaServiceImpl implements PersonaService {
 		else {
 			if (persona.getTipo() == 1) {
 				Estudiante estudiante = (Estudiante) persona;
-				estudiante.setCarrera(estudiante.getCarrera().toUpperCase());
+				estudiante.setCarrera(estudiante.getCarrera().toUpperCase().replace(",", ""));
 				persona = estudiante;
 			} else {
 				Docente docente = (Docente) persona;
-				docente.setMateria(docente.getMateria().toUpperCase());
+				docente.setMateria(docente.getMateria().toUpperCase().replace(",", ""));
 				persona = docente;
 			}
-			persona.setCedula(persona.getCedula().toUpperCase());
-			persona.setNombre(persona.getNombre().toUpperCase());
-			persona.setApellido(persona.getApellido().toUpperCase());
-			persona.setCiudad(persona.getCiudad().toUpperCase());
+			persona.setCedula(persona.getCedula().toUpperCase().replace(",", ""));
+			persona.setNombre(persona.getNombre().toUpperCase().replace(",", ""));
+			persona.setApellido(persona.getApellido().toUpperCase().replace(",", ""));
+			persona.setCiudad(persona.getCiudad().toUpperCase().replace(",", ""));
 			return personaDao.modificar(persona);
 		}
 	}

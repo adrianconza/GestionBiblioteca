@@ -12,12 +12,16 @@ public class UtilsDate {
 		try {
 			return formatoFecha.parse(fecha);
 		} catch (ParseException e) {
-			return new Date();
+			return null;
 		}
 	}
 
 	public static String dateToString(Date fecha) {
-		return formatoFecha.format(fecha);
+		try {
+			return formatoFecha.format(fecha);
+		} catch (Exception e) {
+			return "";
+		}
 	}
 
 }

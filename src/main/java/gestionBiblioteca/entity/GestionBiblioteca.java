@@ -27,7 +27,7 @@ public class GestionBiblioteca {
 
 	public GestionBiblioteca(String datoAux[], Persona persona,
 			List<MaterialBibliografico> listaMaterialBibliografico) {
-		this(Integer.parseInt(datoAux[1]), UtilsDate.stringToDate(datoAux[2]), UtilsDate.stringToDate(datoAux[3]),
+		this(Integer.parseInt(datoAux[0]), UtilsDate.stringToDate(datoAux[1]), UtilsDate.stringToDate(datoAux[2]),
 				persona, listaMaterialBibliografico);
 	}
 

@@ -57,8 +57,12 @@ public class MaterialBibliograficoDaoImpl implements MaterialBibliograficoDao {
 	public String modificar(MaterialBibliografico materialBibliografico) {
 		try {
 			List<MaterialBibliografico> listaMaterialBibliografico = obtenerTodos();
-			listaMaterialBibliografico.set(listaMaterialBibliografico.indexOf(materialBibliografico),
-					materialBibliografico);
+			for (int i = 0; i < listaMaterialBibliografico.size(); i++)
+				if (materialBibliografico.getCodigo()
+						.compareToIgnoreCase(listaMaterialBibliografico.get(i).getCodigo()) == 0) {
+					listaMaterialBibliografico.set(i, materialBibliografico);
+					break;
+				}
 			UtilsArchivos.modificarEliminar(bdMaterialBibliografico,
 					UtilsArchivos.generarListaGuardar(listaMaterialBibliografico));
 		} catch (Exception e) {
@@ -70,7 +74,12 @@ public class MaterialBibliograficoDaoImpl implements MaterialBibliograficoDao {
 	public String eliminar(MaterialBibliografico materialBibliografico) {
 		try {
 			List<MaterialBibliografico> listaMaterialBibliografico = obtenerTodos();
-			listaMaterialBibliografico.remove(materialBibliografico);
+			for (int i = 0; i < listaMaterialBibliografico.size(); i++)
+				if (materialBibliografico.getCodigo()
+						.compareToIgnoreCase(listaMaterialBibliografico.get(i).getCodigo()) == 0) {
+					listaMaterialBibliografico.remove(i);
+					break;
+				}
 			UtilsArchivos.modificarEliminar(bdMaterialBibliografico,
 					UtilsArchivos.generarListaGuardar(listaMaterialBibliografico));
 		} catch (Exception e) {

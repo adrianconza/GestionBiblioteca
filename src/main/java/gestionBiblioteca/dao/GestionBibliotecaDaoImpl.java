@@ -18,6 +18,7 @@ public class GestionBibliotecaDaoImpl implements GestionBibliotecaDao {
 		try {
 			UtilsArchivos.insertar(bdGestionBiblioteca, gestionBiblioteca.toString());
 		} catch (Exception e) {
+			e.printStackTrace();
 			return "TNo se pudo ingresar la gestion biblioteca, causa: " + e.getCause().getMessage();
 		}
 		return "TSe ingreso correctamente la gestion biblioteca";
@@ -28,9 +29,9 @@ public class GestionBibliotecaDaoImpl implements GestionBibliotecaDao {
 		try {
 			for (String dato : UtilsArchivos.obtenerTodos(bdGestionBiblioteca)) {
 				String datoAux[] = dato.split(",");
-				Persona persona = personaDao.obtenerPorCedula(datoAux[4]);
+				Persona persona = personaDao.obtenerPorCedula(datoAux[3]);
 				List<MaterialBibliografico> listaMaterialBibliografico = new ArrayList<MaterialBibliografico>();
-				for (int i = 5; i < datoAux.length; i++)
+				for (int i = 4; i < datoAux.length; i++)
 					listaMaterialBibliografico.add(materialBibliograficoDao.obtenerPorCodigo(datoAux[i]));
 				listaGestionBiblioteca.add(new GestionBiblioteca(datoAux, persona, listaMaterialBibliografico));
 			}
@@ -51,7 +52,11 @@ public class GestionBibliotecaDaoImpl implements GestionBibliotecaDao {
 	public String modificar(GestionBiblioteca gestionBiblioteca) {
 		try {
 			List<GestionBiblioteca> listaGestionBiblioteca = obtenerTodos();
-			listaGestionBiblioteca.set(listaGestionBiblioteca.indexOf(gestionBiblioteca), gestionBiblioteca);
+			for (int i = 0; i < listaGestionBiblioteca.size(); i++)
+				if (gestionBiblioteca.getId() == listaGestionBiblioteca.get(i).getId()) {
+					listaGestionBiblioteca.set(i, gestionBiblioteca);
+					break;
+				}
 			UtilsArchivos.modificarEliminar(bdGestionBiblioteca,
 					UtilsArchivos.generarListaGuardar(listaGestionBiblioteca));
 		} catch (Exception e) {
@@ -63,7 +68,11 @@ public class GestionBibliotecaDaoImpl implements GestionBibliotecaDao {
 	public String eliminar(GestionBiblioteca gestionBiblioteca) {
 		try {
 			List<GestionBiblioteca> listaGestionBiblioteca = obtenerTodos();
-			listaGestionBiblioteca.remove(gestionBiblioteca);
+			for (int i = 0; i < listaGestionBiblioteca.size(); i++)
+				if (gestionBiblioteca.getId() == listaGestionBiblioteca.get(i).getId()) {
+					listaGestionBiblioteca.remove(i);
+					break;
+				}
 			UtilsArchivos.modificarEliminar(bdGestionBiblioteca,
 					UtilsArchivos.generarListaGuardar(listaGestionBiblioteca));
 		} catch (Exception e) {

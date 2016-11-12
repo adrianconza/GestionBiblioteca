@@ -22,21 +22,21 @@ public class MaterialBibliograficoServiceImpl implements MaterialBibliograficoSe
 		else {
 			if (materialBibliografico.getTipo() == 1) {
 				Tesis tesis = (Tesis) materialBibliografico;
-				tesis.setAutor(tesis.getAutor().toUpperCase());
-				tesis.setTutor(tesis.getTutor().toUpperCase());
+				tesis.setAutor(tesis.getAutor().toUpperCase().replace(",", ""));
+				tesis.setTutor(tesis.getTutor().toUpperCase().replace(",", ""));
 				materialBibliografico = tesis;
 			} else if (materialBibliografico.getTipo() == 2) {
 				Revista revista = (Revista) materialBibliografico;
-				revista.setTipoRevista(revista.getTipoRevista().toUpperCase());
+				revista.setTipoRevista(revista.getTipoRevista().toUpperCase().replace(",", ""));
 				materialBibliografico = revista;
 			} else {
 				Libro libro = (Libro) materialBibliografico;
-				libro.setEditorial(libro.getEditorial().toUpperCase());
-				libro.setAutor(libro.getAutor().toUpperCase());
+				libro.setEditorial(libro.getEditorial().toUpperCase().replace(",", ""));
+				libro.setAutor(libro.getAutor().toUpperCase().replace(",", ""));
 				materialBibliografico = libro;
 			}
-			materialBibliografico.setCodigo(materialBibliografico.getCodigo().toUpperCase());
-			materialBibliografico.setTitulo(materialBibliografico.getTitulo().toUpperCase());
+			materialBibliografico.setCodigo(materialBibliografico.getCodigo().toUpperCase().replace(",", ""));
+			materialBibliografico.setTitulo(materialBibliografico.getTitulo().toUpperCase().replace(",", ""));
 			return materialBibliograficoDao.insertar(materialBibliografico);
 		}
 	}
@@ -56,21 +56,21 @@ public class MaterialBibliograficoServiceImpl implements MaterialBibliograficoSe
 		else {
 			if (materialBibliografico.getTipo() == 1) {
 				Tesis tesis = (Tesis) materialBibliografico;
-				tesis.setAutor(tesis.getAutor().toUpperCase());
-				tesis.setTutor(tesis.getTutor().toUpperCase());
+				tesis.setAutor(tesis.getAutor().toUpperCase().replace(",", ""));
+				tesis.setTutor(tesis.getTutor().toUpperCase().replace(",", ""));
 				materialBibliografico = tesis;
 			} else if (materialBibliografico.getTipo() == 2) {
 				Revista revista = (Revista) materialBibliografico;
-				revista.setTipoRevista(revista.getTipoRevista().toUpperCase());
+				revista.setTipoRevista(revista.getTipoRevista().toUpperCase().replace(",", ""));
 				materialBibliografico = revista;
 			} else {
 				Libro libro = (Libro) materialBibliografico;
-				libro.setEditorial(libro.getEditorial().toUpperCase());
-				libro.setAutor(libro.getAutor().toUpperCase());
+				libro.setEditorial(libro.getEditorial().toUpperCase().replace(",", ""));
+				libro.setAutor(libro.getAutor().toUpperCase().replace(",", ""));
 				materialBibliografico = libro;
 			}
-			materialBibliografico.setCodigo(materialBibliografico.getCodigo().toUpperCase());
-			materialBibliografico.setTitulo(materialBibliografico.getTitulo().toUpperCase());
+			materialBibliografico.setCodigo(materialBibliografico.getCodigo().toUpperCase().replace(",", ""));
+			materialBibliografico.setTitulo(materialBibliografico.getTitulo().toUpperCase().replace(",", ""));
 			return materialBibliograficoDao.modificar(materialBibliografico);
 		}
 	}
@@ -94,7 +94,7 @@ public class MaterialBibliograficoServiceImpl implements MaterialBibliograficoSe
 		else if (mb.getUnidades() == 0)
 			return "FIngrese el numero de unidades del material bibliografico";
 		else if (mb.getTipo() == 0)
-			return "FIngrese el tipo de la persona";
+			return "FIngrese el tipo del material bibliografico";
 		else {
 			if (mb.getTipo() == 1) {
 				Tesis tesis = (Tesis) mb;
@@ -105,7 +105,7 @@ public class MaterialBibliograficoServiceImpl implements MaterialBibliograficoSe
 			} else if (mb.getTipo() == 2) {
 				Revista revista = (Revista) mb;
 				if (revista.getFechaPublicacion() == null)
-					return "FIngrese la fecha de publicacion para la revista";
+					return "FIngrese la fecha de publicacion para la revista en formato dd/MM/yyyy";
 				else if (revista.getTipoRevista() == null || revista.getTipoRevista().compareToIgnoreCase("") == 0)
 					return "FIngrese el tipo de revista para la revista";
 			} else {

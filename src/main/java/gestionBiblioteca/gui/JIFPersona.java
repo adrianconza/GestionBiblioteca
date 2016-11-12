@@ -228,7 +228,7 @@ public class JIFPersona extends JInternalFrame {
 		panel_2.setLayout(null);
 
 		JLabel lblListado = new JLabel("LISTADO");
-		lblListado.setBounds(201, 0, 70, 28);
+		lblListado.setBounds(219, 0, 70, 28);
 		panel_2.add(lblListado);
 		lblListado.setFont(new Font("Tahoma", Font.PLAIN, 15));
 
@@ -269,6 +269,7 @@ public class JIFPersona extends JInternalFrame {
 							JOptionPane.ERROR_MESSAGE);
 				else {
 					activarDesactivar(true);
+					jtfCedula.setEnabled(false);
 					nuevoModificar = false;
 				}
 			}
@@ -297,7 +298,6 @@ public class JIFPersona extends JInternalFrame {
 						llenarTabla();
 					}
 				}
-
 			}
 		});
 		btnEliminar.setBounds(358, 381, 89, 23);
@@ -307,8 +307,8 @@ public class JIFPersona extends JInternalFrame {
 	}
 
 	private void llenarTabla() {
-		if (listPersona != null && !listPersona.isEmpty()) {
-			for (int i = 0; i < model.getRowCount(); i++)
+		if (listPersona != null) {
+			for (int i = model.getRowCount() - 1; i >= 0; i--)
 				model.removeRow(i);
 			for (Persona persona : listPersona)
 				model.addRow(new Object[] { persona.getCedula(), persona.getApellido(), persona.getNombre(),
@@ -329,12 +329,10 @@ public class JIFPersona extends JInternalFrame {
 
 		if (persona.getTipo() == 1) {
 			Estudiante estudiante = (Estudiante) persona;
-			lblCarreraMateria.setText("Carrera");
 			jtfCarreraMateria.setText(estudiante.getCarrera());
 			jtfSemestre.setText(String.valueOf(estudiante.getSemestre()));
 		} else {
 			Docente docente = (Docente) persona;
-			lblCarreraMateria.setText("Materia");
 			jtfCarreraMateria.setText(docente.getMateria());
 		}
 	}

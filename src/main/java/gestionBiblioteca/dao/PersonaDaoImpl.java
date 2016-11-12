@@ -60,7 +60,7 @@ public class PersonaDaoImpl implements PersonaDao {
 			UtilsArchivos.modificarEliminar(bdPersona, UtilsArchivos.generarListaGuardar(listaPersona));
 		} catch (Exception e) {
 			e.printStackTrace();
-			return "FNo se pudo modificar a la persona, causa: " + e.getCause();
+			return "FNo se pudo modificar a la persona, causa: " + e.getCause().getMessage();
 		}
 		return "TSe modifico correctamente a la persona";
 	}
@@ -73,7 +73,6 @@ public class PersonaDaoImpl implements PersonaDao {
 					listaPersona.remove(i);
 					break;
 				}
-			listaPersona.remove(obtenerPorCedula(persona.getCedula()));
 			UtilsArchivos.modificarEliminar(bdPersona, UtilsArchivos.generarListaGuardar(listaPersona));
 		} catch (Exception e) {
 			return "FNo se pudo eliminar a la persona, causa: " + e.getCause().getMessage();
