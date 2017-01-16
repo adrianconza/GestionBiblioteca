@@ -1,22 +1,32 @@
 package gestionBiblioteca.dao;
 
+import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
 import gestionBiblioteca.entity.GestionBiblioteca;
 import gestionBiblioteca.entity.MaterialBibliografico;
 import gestionBiblioteca.entity.Persona;
-import gestionBiblioteca.utils.UtilsArchivos;
+import gestionBiblioteca.utils.UtilsBD;
 
 public class GestionBibliotecaDaoImpl implements GestionBibliotecaDao {
 
-	private String bdGestionBiblioteca = UtilsArchivos.getBDGestionBiblioteca();
+	private UtilsBD utilsBD = UtilsBD.getInstance();
 	private PersonaDao personaDao = new PersonaDaoImpl();
 	private MaterialBibliograficoDao materialBibliograficoDao = new MaterialBibliograficoDaoImpl();
 
 	public String insertar(GestionBiblioteca gestionBiblioteca) {
 		try {
-			UtilsArchivos.insertar(bdGestionBiblioteca, gestionBiblioteca.toString());
+			utilsBD.sentencia(
+					"INSERT INTO gestion_biblioteca(id, fecha_prestamo, fecha_devolucion, cedula) VALUES (?, ?, ?, ?);",
+					new Object[] { gestionBiblioteca.getId(), gestionBiblioteca.getFechaPrestamo(), null,
+							gestionBiblioteca.getPersona().getCedula() });
+			if (gestionBiblioteca.getListaMaterialBibliografico() != null)
+				for (MaterialBibliografico mb : gestionBiblioteca.getListaMaterialBibliografico()) {
+					utilsBD.sentencia(
+							"INSERT INTO gestion_biblioteca_material_bilbiografico(id, codigo) VALUES (?, ?);",
+							new Object[] { gestionBiblioteca.getId(), mb.getCodigo() });
+				}
 		} catch (Exception e) {
 			e.printStackTrace();
 			return "TNo se pudo ingresar la gestion biblioteca, causa: " + e.getCause().getMessage();
@@ -27,13 +37,26 @@ public class GestionBibliotecaDaoImpl implements GestionBibliotecaDao {
 	public List<GestionBiblioteca> obtenerTodos() {
 		List<GestionBiblioteca> listaGestionBiblioteca = new ArrayList<GestionBiblioteca>();
 		try {
-			for (String dato : UtilsArchivos.obtenerTodos(bdGestionBiblioteca)) {
-				String datoAux[] = dato.split(",");
-				Persona persona = personaDao.obtenerPorCedula(datoAux[3]);
-				List<MaterialBibliografico> listaMaterialBibliografico = new ArrayList<MaterialBibliografico>();
-				for (int i = 4; i < datoAux.length; i++)
-					listaMaterialBibliografico.add(materialBibliograficoDao.obtenerPorCodigo(datoAux[i]));
-				listaGestionBiblioteca.add(new GestionBiblioteca(datoAux, persona, listaMaterialBibliografico));
+			ResultSet rsGestionBiblioteca = utilsBD
+					.consulta("SELECT id, fecha_prestamo, fecha_devolucion, cedula FROM gestion_biblioteca;");
+			if (rsGestionBiblioteca != null) {
+				while (rsGestionBiblioteca.next()) {
+					Persona persona = personaDao.obtenerPorCedula(rsGestionBiblioteca.getString("cedula"));
+					List<MaterialBibliografico> listaMaterialBibliografico = new ArrayList<MaterialBibliografico>();
+					ResultSet rsListaMaterialBibliografico = utilsBD
+							.consulta("SELECT id, codigo FROM gestion_biblioteca_material_bilbiografico WHERE id="
+									+ rsGestionBiblioteca.getInt("id") + ";");
+					if (rsListaMaterialBibliografico != null) {
+						while (rsListaMaterialBibliografico.next())
+							listaMaterialBibliografico.add(
+									materialBibliograficoDao.obtenerPorCodigo(rsGestionBiblioteca.getString("codigo")));
+						rsListaMaterialBibliografico.close();
+					}
+					listaGestionBiblioteca.add(new GestionBiblioteca(rsGestionBiblioteca.getInt("id"),
+							rsGestionBiblioteca.getDate("fecha_prestamo"),
+							rsGestionBiblioteca.getDate("fecha_devolucion"), persona, listaMaterialBibliografico));
+				}
+				rsGestionBiblioteca.close();
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -43,22 +66,47 @@ public class GestionBibliotecaDaoImpl implements GestionBibliotecaDao {
 	}
 
 	public GestionBiblioteca obtenerPorId(int id) {
-		for (GestionBiblioteca gestionBiblioteca : obtenerTodos())
-			if (gestionBiblioteca.getId() == id)
-				return gestionBiblioteca;
-		return null;
+		GestionBiblioteca gestionBiblioteca = null;
+		try {
+			ResultSet rsGestionBiblioteca = utilsBD.consulta(
+					"SELECT id, fecha_prestamo, fecha_devolucion, cedula FROM gestion_biblioteca WHERE id=" + id + ";");
+			if (rsGestionBiblioteca != null) {
+				while (rsGestionBiblioteca.next()) {
+					Persona persona = personaDao.obtenerPorCedula(rsGestionBiblioteca.getString("cedula"));
+					List<MaterialBibliografico> listaMaterialBibliografico = new ArrayList<MaterialBibliografico>();
+					ResultSet rsListaMaterialBibliografico = utilsBD.consulta(
+							"SELECT id, codigo FROM gestion_biblioteca_material_bilbiografico WHERE id=" + id + ";");
+					if (rsListaMaterialBibliografico != null) {
+						while (rsListaMaterialBibliografico.next())
+							listaMaterialBibliografico.add(
+									materialBibliograficoDao.obtenerPorCodigo(rsGestionBiblioteca.getString("codigo")));
+						rsListaMaterialBibliografico.close();
+					}
+					gestionBiblioteca = new GestionBiblioteca(rsGestionBiblioteca.getInt("id"),
+							rsGestionBiblioteca.getDate("fecha_prestamo"),
+							rsGestionBiblioteca.getDate("fecha_devolucion"), persona, listaMaterialBibliografico);
+				}
+				rsGestionBiblioteca.close();
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return gestionBiblioteca;
 	}
 
 	public String modificar(GestionBiblioteca gestionBiblioteca) {
 		try {
-			List<GestionBiblioteca> listaGestionBiblioteca = obtenerTodos();
-			for (int i = 0; i < listaGestionBiblioteca.size(); i++)
-				if (gestionBiblioteca.getId() == listaGestionBiblioteca.get(i).getId()) {
-					listaGestionBiblioteca.set(i, gestionBiblioteca);
-					break;
+			utilsBD.sentencia(
+					"UPDATE gestion_biblioteca SET fecha_prestamo=?, fecha_devolucion=?, cedula=? WHERE id=?;",
+					new Object[] { gestionBiblioteca.getFechaPrestamo(), gestionBiblioteca.getFechaDevolucion(),
+							gestionBiblioteca.getPersona().getCedula(), gestionBiblioteca.getId() });
+			utilsBD.sentencia("DELETE FROM gestion_biblioteca_material_bilbiografico WHERE id=?;",
+					new Object[] { gestionBiblioteca.getId() });
+			if (gestionBiblioteca.getListaMaterialBibliografico() != null)
+				for (MaterialBibliografico mb : gestionBiblioteca.getListaMaterialBibliografico()) {
+					utilsBD.sentencia("UPDATE gestion_biblioteca_material_bilbiografico SET codigo=? WHERE id=?;",
+							new Object[] { mb.getCodigo(), gestionBiblioteca.getId() });
 				}
-			UtilsArchivos.modificarEliminar(bdGestionBiblioteca,
-					UtilsArchivos.generarListaGuardar(listaGestionBiblioteca));
 		} catch (Exception e) {
 			return "TNo se pudo modificar la gestion biblioteca, causa: " + e.getCause().getMessage();
 		}
@@ -67,14 +115,7 @@ public class GestionBibliotecaDaoImpl implements GestionBibliotecaDao {
 
 	public String eliminar(GestionBiblioteca gestionBiblioteca) {
 		try {
-			List<GestionBiblioteca> listaGestionBiblioteca = obtenerTodos();
-			for (int i = 0; i < listaGestionBiblioteca.size(); i++)
-				if (gestionBiblioteca.getId() == listaGestionBiblioteca.get(i).getId()) {
-					listaGestionBiblioteca.remove(i);
-					break;
-				}
-			UtilsArchivos.modificarEliminar(bdGestionBiblioteca,
-					UtilsArchivos.generarListaGuardar(listaGestionBiblioteca));
+			utilsBD.sentencia("DELETE FROM gestion_biblioteca WHERE id=?;", new Object[] { gestionBiblioteca.getId() });
 		} catch (Exception e) {
 			return "TNo se pudo eliminar la gestion biblioteca, causa: " + e.getCause().getMessage();
 		}

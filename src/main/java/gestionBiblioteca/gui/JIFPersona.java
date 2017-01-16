@@ -60,7 +60,7 @@ public class JIFPersona extends JInternalFrame {
 		super("Gestionar Personas", true, true, true, true);
 		initComponents(posicionX, posicionY);
 		limpiar();
-		activarDesactivar(false);
+		activarDesactivar(false, false);
 		listPersona = personaService.obtenerTodos();
 		llenarTabla();
 	}
@@ -133,7 +133,7 @@ public class JIFPersona extends JInternalFrame {
 		btnCancelar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				limpiar();
-				activarDesactivar(false);
+				activarDesactivar(false, false);
 			}
 		});
 		btnCancelar.setBounds(167, 381, 89, 23);
@@ -254,7 +254,7 @@ public class JIFPersona extends JInternalFrame {
 		btnNuevo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				limpiar();
-				activarDesactivar(true);
+				activarDesactivar(true, true);
 				nuevoModificar = true;
 			}
 		});
@@ -268,7 +268,7 @@ public class JIFPersona extends JInternalFrame {
 					JOptionPane.showMessageDialog(null, "Escoja una fila primero", "Mensaje del Sistema",
 							JOptionPane.ERROR_MESSAGE);
 				else {
-					activarDesactivar(true);
+					activarDesactivar(true, false);
 					jtfCedula.setEnabled(false);
 					nuevoModificar = false;
 				}
@@ -284,7 +284,7 @@ public class JIFPersona extends JInternalFrame {
 					JOptionPane.showMessageDialog(null, "Escoja una fila primero", "Mensaje del Sistema",
 							JOptionPane.ERROR_MESSAGE);
 				else {
-					activarDesactivar(false);
+					activarDesactivar(false, false);
 					String mensaje = personaService.eliminar(persona);
 					String control = String.valueOf(mensaje.charAt(0));
 					mensaje = mensaje.substring(1);
@@ -382,7 +382,7 @@ public class JIFPersona extends JInternalFrame {
 			else
 				listPersona.set(listPersona.indexOf(this.persona), persona);
 			limpiar();
-			activarDesactivar(false);
+			activarDesactivar(false, false);
 			llenarTabla();
 		}
 	}
@@ -405,7 +405,7 @@ public class JIFPersona extends JInternalFrame {
 		jtfSemestre.setVisible(false);
 	}
 
-	private void activarDesactivar(boolean activoDesactivo) {
+	private void activarDesactivar(boolean activoDesactivo, boolean insertar) {
 		jtfCedula.setEnabled(activoDesactivo);
 		jtfNombre.setEnabled(activoDesactivo);
 		jtfApellido.setEnabled(activoDesactivo);
@@ -413,7 +413,7 @@ public class JIFPersona extends JInternalFrame {
 		jtfEdad.setEnabled(activoDesactivo);
 		jtfCiudad.setEnabled(activoDesactivo);
 		jtfTelefono.setEnabled(activoDesactivo);
-		jcbTipo.setEnabled(activoDesactivo);
+		jcbTipo.setEnabled(insertar);
 		jtfCarreraMateria.setEnabled(activoDesactivo);
 		jtfSemestre.setEnabled(activoDesactivo);
 

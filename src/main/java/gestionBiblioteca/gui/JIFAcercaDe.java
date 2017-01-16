@@ -7,14 +7,12 @@ import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 
-import gestionBiblioteca.utils.UtilsArchivos;
-
 public class JIFAcercaDe extends JInternalFrame {
 	private static final long serialVersionUID = 1L;
 
 	public JIFAcercaDe(int posicionX, int posicionY) {
 		super("Acerca De", false, true, false, true);
-		setBounds(posicionX, posicionY, 726, 287);
+		setBounds(posicionX, posicionY, 726, 261);
 		getContentPane().setLayout(null);
 
 		String font = "SansSerif";
@@ -61,7 +59,7 @@ public class JIFAcercaDe extends JInternalFrame {
 		lblCorreo.setBounds(10, 153, 208, 28);
 		getContentPane().add(lblCorreo);
 
-		JLabel lblPacaconzagmailcom = new JLabel("pconza@redepronik.com.ec");
+		JLabel lblPacaconzagmailcom = new JLabel("paulo@adrianconza.com");
 		lblPacaconzagmailcom.setForeground(new Color(51, 102, 255));
 		lblPacaconzagmailcom.setFont(new Font(font, Font.PLAIN, 16));
 		lblPacaconzagmailcom.setBounds(228, 153, 474, 28);
@@ -70,27 +68,15 @@ public class JIFAcercaDe extends JInternalFrame {
 		JLabel lblCodigoFuente = new JLabel("CODIGO FUENTE:");
 		lblCodigoFuente.setForeground(new Color(51, 102, 255));
 		lblCodigoFuente.setFont(new Font(font, Font.PLAIN, 18));
-		lblCodigoFuente.setBounds(10, 211, 208, 28);
+		lblCodigoFuente.setBounds(10, 190, 208, 28);
 		getContentPane().add(lblCodigoFuente);
 
-		JTextField caja1 = new JTextField("https://github.com/pacaconza94/GestionBiblioteca");
+		JTextField caja1 = new JTextField("https://github.com/adrianconza/GestionBiblioteca");
 		caja1.setEditable(false);
 		caja1.setForeground(new Color(51, 102, 255));
 		caja1.setFont(new Font(font, Font.PLAIN, 16));
-		caja1.setBounds(228, 211, 474, 28);
+		caja1.setBounds(228, 190, 474, 28);
 		getContentPane().add(caja1);
-
-		JLabel lblUbicacionDeLa = new JLabel("UBICACION DE LA BD:");
-		lblUbicacionDeLa.setForeground(new Color(51, 102, 255));
-		lblUbicacionDeLa.setFont(new Font("SansSerif", Font.PLAIN, 18));
-		lblUbicacionDeLa.setBounds(10, 182, 208, 28);
-		getContentPane().add(lblUbicacionDeLa);
-
-		JLabel lblBD = new JLabel(UtilsArchivos.getBD());
-		lblBD.setForeground(new Color(51, 102, 255));
-		lblBD.setFont(new Font("SansSerif", Font.PLAIN, 16));
-		lblBD.setBounds(228, 182, 474, 28);
-		getContentPane().add(lblBD);
 
 		setVisible(true);
 
