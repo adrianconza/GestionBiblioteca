@@ -48,8 +48,8 @@ public class GestionBibliotecaDaoImpl implements GestionBibliotecaDao {
 									+ rsGestionBiblioteca.getInt("id") + ";");
 					if (rsListaMaterialBibliografico != null) {
 						while (rsListaMaterialBibliografico.next())
-							listaMaterialBibliografico.add(
-									materialBibliograficoDao.obtenerPorCodigo(rsGestionBiblioteca.getString("codigo")));
+							listaMaterialBibliografico.add(materialBibliograficoDao
+									.obtenerPorCodigo(rsListaMaterialBibliografico.getString("codigo")));
 						rsListaMaterialBibliografico.close();
 					}
 					listaGestionBiblioteca.add(new GestionBiblioteca(rsGestionBiblioteca.getInt("id"),
